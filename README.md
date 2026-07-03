@@ -1,6 +1,41 @@
 # MHHB
 Mobile health human behaviour analysis
 
+Dataset taken from kaggle.
+
+## Data Insight
+The MHEALTH dataset contains recordings from ten volunteers wearing sensors on their chest, right wrist, and left ankle.
+
+- What it measures: It records acceleration, rate of turn (gyroscope), and magnetic field orientation, plus 2-lead ECG (heart monitoring) data from the chest sensor.
+
+- The Goal: The volunteers performed 12 specific activities—like standing, walking, jogging, cycling, climbing stairs, and various movements (like waist bends or knee bends).
+
+- The Dataset's Job: It serves as a "benchmark" to test how well a computer can "see" or "feel" human movement through sensors rather than cameras.
+
+## What is the program doing?
+the notebook is building a Human Activity Recognition (HAR) system. It follows these steps to turn raw sensor numbers into activity labels:
+
+- Label Encoding: It turns text labels like "Walking" or "Sitting" into numbers (0, 1, 2...) so the computer can process them.
+
+- Data Scaling: It uses RobustScaler to normalize the sensor data. Since sensor readings can vary wildly (e.g., a sudden jump in movement), scaling ensures the model isn't "confused" by extreme values or outliers.
+
+- Training & Classification: It uses models like LogisticRegression and KNeighborsClassifier (KNN) to find patterns in the data. For example, it learns that a specific pattern of acceleration from the wrist and ankle sensors almost always corresponds to "Jogging."
+
+- Performance Tracking: the code automates the testing process to compare different models and tune parameters (like finding the best "K" for KNN) to see which one identifies the activities most accurately.
+
+## Why are we doing this? (The Purpose)
+The ultimate goal of this kind of research is Automated Health Monitoring. By teaching a computer to recognize activities, you can build systems that:
+
+- Monitor Fitness: Automatically track how much time someone spends running vs. sitting.
+
+- Elderly Care: Detect if someone has fallen or if they haven't moved for an unusually long period.
+
+- Rehabilitation: Check if a patient is performing their physical therapy exercises correctly.
+
+- Personalized Healthcare: Combine motion data with heart rate (ECG) data to provide real-time alerts about a person's health during daily life.
+
+
+
 ## ML Models used and theory:
 
 ## 1. The Linear Foundations
@@ -9,10 +44,10 @@ Mobile health human behaviour analysis
 *   **The Intuition:** Imagine you are trying to predict if a student passes or fails based on study hours.
  A straight line might predict a value of $1.5$ or $-0.2$, which makes no sense for a binary "Pass/Fail" (0 or 1).
 *   **The Theory:** Logistic Regression passes the linear output through a Sigmoid Function ($1 / (1 + e^{-z})$). This "squashes" any number into the range between 0 and 1, which we interpret as a probability.
-*   **Pro Tip:** It assumes a linear relationship. If your data is not linearly separable, it will perform poorly.
+*   **Pro Tip:** It assumes a linear relationship. If the data is not linearly separable, it will perform poorly.
 
 ### Lasso (L1 Regularization)
-*   **The Intuition:** Sometimes your data has hundreds of features (columns), but only 5 are actually useful. Keeping all of them introduces "noise."
+*   **The Intuition:** Sometimes the data has hundreds of features (columns), but only 5 are actually useful. Keeping all of them introduces "noise."
 *   **The Theory:** Lasso adds a penalty equal to the absolute value of the coefficients to the loss function. This penalty is mathematically "sharp" at zero, which forces the model to set the least important coefficients to exactly 0.
 *   **Pro Tip:** Use this when you want a model that performs feature selection for you.
 
